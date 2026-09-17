@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>포트폴리오 | Your Name</title>
+  
+  <!-- 구글 폰트 (Inter + Space Grotesk) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- 🧭 Header -->
+  <header class="header">
+    <nav class="nav">
+      <a href="#" class="logo">Portfolio<span>.</span></a>
+      <ul class="nav-menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </nav>
+  </header>
+
+  <!-- 🎯 Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Available for work</span>
+      <h1>
+        Creative<br>
+        Developer<br>
+        <span class="accent">crafting</span> ideas.
+      </h1>
+      <p>
+        웹의 경계를 넘어 인터랙티브한 경험을 만듭니다.
+        디자인과 코드로 아이디어를 현실로.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          작업물 보기 →
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          연락하기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 👤 About -->
+  <section class="about" id="about">
+    <div class="container">
+      <p class="section-label">— About Me</p>
+      <h2 class="section-title">
+        코드로 이야기를<br>만드는 개발자
+      </h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            안녕하세요! 저는 사용자 경험을 최우선으로 생각하는
+            프론트엔드 개발자입니다.
+          </p>
+          <p>
+            HTML, CSS, JavaScript를 기반으로 반응형 웹사이트를
+            만들며, 최근에는 React와 TypeScript를 학습 중입니다.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-num">2+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">15+</div>
+            <div class="stat-label">Projects Done</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Coffee Cups</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💼 Projects -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <p class="section-label">— Selected Work</p>
+      <h2 class="section-title">
+        최근 프로젝트
+      </h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-num">01 / Web</div>
+          <h3>E-Commerce Platform</h3>
+          <p>모던한 온라인 쇼핑몰 UI/UX 리디자인 프로젝트입니다.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Tailwind</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-num">02 / App</div>
+          <h3>Task Manager</h3>
+          <p>드래그 앤 드롭으로 관리하는 생산성 앱입니다.</p>
+          <div class="project-tags">
+            <span class="tag">Vue</span>
+            <span class="tag">Firebase</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-num">03 / Web</div>
+          <h3>Portfolio Site</h3>
+          <p>지금 보고 계신 이 포트폴리오 사이트입니다.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📧 Contact -->
+<section class="contact" id="contact">
+  <div class="container">
+    <p class="section-label">— Get in touch</p>
+    <h2>
+      함께 멋진 것을<br>만들어봐요.
+    </h2>
+    <a href="mailto:your@email.com" class="contact-email">
+      your@email.com
+    </a>
+    
+    <!-- ✨ 메시지 보내기 버튼 (모달 트리거) -->
+    <div class="contact-cta">
+      <button class="btn btn-primary" id="openModal">
+        ✉️ 메시지 보내기
+      </button>
+    </div>
+
+    <div class="social-links">
+      <a href="#" aria-label="GitHub">🐙</a>
+      <a href="#" aria-label="LinkedIn">💼</a>
+      <a href="#" aria-label="Twitter">🐦</a>
+    </div>
+  </div>
+</section>
+
+<!-- 🪟 Contact Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-labelledby="modalTitle">
+    <button class="modal-close" id="closeModal" aria-label="닫기">✕</button>
+    
+    <div class="modal-header">
+      <p class="section-label">— Contact Form</p>
+      <h3 id="modalTitle">메시지를 남겨주세요</h3>
+      <p class="modal-sub">보통 24시간 이내에 답변드려요 ⚡</p>
+    </div>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <!-- 이름 -->
+      <div class="form-group">
+        <label for="name">이름 <span class="required">*</span></label>
+        <input type="text" id="name" name="name" placeholder="홍길동" />
+        <span class="error-msg" data-error="name"></span>
+      </div>
+
+      <!-- 이메일 -->
+      <div class="form-group">
+        <label for="email">이메일 <span class="required">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" />
+        <span class="error-msg" data-error="email"></span>
+      </div>
+
+      <!-- 문의 유형 -->
+      <div class="form-group">
+        <label for="type">문의 유형</label>
+        <select id="type" name="type">
+          <option value="project">💼 프로젝트 문의</option>
+          <option value="collab">🤝 협업 제안</option>
+          <option value="job">📋 채용 제안</option>
+          <option value="etc">💬 기타</option>
+        </select>
+      </div>
+
+      <!-- 제목 -->
+      <div class="form-group">
+        <label for="subject">제목 <span class="required">*</span></label>
+        <input type="text" id="subject" name="subject" placeholder="어떤 내용인가요?" />
+        <span class="error-msg" data-error="subject"></span>
+      </div>
+
+      <!-- 메시지 -->
+      <div class="form-group">
+        <label for="message">
+          메시지 <span class="required">*</span>
+          <span class="char-count"><span id="charCount">0</span>/500</span>
+        </label>
+        <textarea id="message" name="message" rows="5" maxlength="500" placeholder="자세한 내용을 알려주세요..."></textarea>
+        <span class="error-msg" data-error="message"></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">
+        보내기 →
+      </button>
+    </form>
+
+    <!-- ✅ 성공 메시지 -->
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon">✅</div>
+      <h3>메시지가 전송되었습니다!</h3>
+      <p>빠른 시일 내에 답변드릴게요 🙌</p>
+    </div>
+  </div>
+</div>
+
+  <!-- 🦶 Footer -->
+  <footer class="footer">
+    © 2025 Your Name. Crafted with ☕ and code.
+  </footer>
+
+</body>
+</html>
