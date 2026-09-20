@@ -206,3 +206,223 @@ form.addEventListener('submit', (e) => {
     closeModal();
   }, 2500);
 });
+/* ========================================
+   🐙 GitHub API 연동
+   ======================================== */
+
+// ⚙️ 설정
+const GITHUB_USERNAME = 'octocat'; // ← 여기에 본인 GitHub 아이디!
+const MAX_PROJECTS = 6;             // 보여줄 최대 개수
+const projectsGrid = document.getElementById('projectsGrid');
+
+/* ========================================
+   🎨 언어별 색상 매핑 (GitHub 스타일)
+   ======================================== */
+const languageColors = {
+  JavaScript: '#f1e05a',
+  TypeScript: '#3178c6',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  Python: '#3572A5',
+  Java: '#b07219',
+  'C++': '#f34b7d',
+  Go: '#00ADD8',
+  Rust: '#dea584',
+  Vue: '#41b883',
+  React: '#61dafb',
+};
+
+async function fetchGitHubRepos() {
+  // 💾 캐시 확인 (10분간 유효)
+  const cached = localStorage.getItem('github-repos');
+  const cachedTime = localStorage.getItem('github-repos-time');
+  const TEN_MINUTES = 10 * 60 * 1000;
+  
+  if (cached && cachedTime && (Date.now() - cachedTime < TEN_MINUTES)) {
+    console.log('📦 캐시에서 로드!');
+    renderProjects(JSON.parse(cached));
+    return;
+  }
+  
+  // 기존 코드...
+  try {
+    const url = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`;
+    const response = await fetch(url);
+    // ... 중략 ...
+    
+    const filtered = repos
+      .filter(repo => !repo.fork)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .slice(0, MAX_PROJECTS);
+    
+    // 💾 캐시 저장
+    localStorage.setItem('github-repos', JSON.stringify(filtered));
+    localStorage.setItem('github-repos-time', Date.now());
+    
+    renderProjects(filtered);
+  } catch (error) {
+    // ...
+  }
+}
+
+/* ========================================
+   📡 GitHub API 호출
+   ======================================== */
+async function fetchGitHubRepos() {
+  try {
+    // ⏱️ URL 구성 (최근 업데이트 순으로 정렬)
+    const url = `https://api.github.com/users/choijiwonj/repos?sort=updated&per_page=100`;
+    
+    const response = await fetch(url);
+    
+    // 응답 상태 체크
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('사용자를 찾을 수 없어요.');
+      }
+      if (response.status === 403) {
+        throw new Error('API 요청 한도를 초과했어요. 잠시 후 다시 시도해주세요.');
+      }
+      throw new Error(`HTTP 에러: ${response.status}`);
+    }
+    
+    const repos = await response.json();
+    
+    // 🔍 필터링: fork된 저장소 제외, description 있는 것만
+    const filtered = repos
+      .filter(repo => !repo.fork)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count) // 스타 많은 순
+      .slice(0, MAX_PROJECTS);
+    
+    renderProjects(filtered);
+    
+  } catch (error) {
+    console.error('❌ GitHub API 에러:', error);
+    renderError(error.message);
+  }
+}
+
+/* ========================================
+   🎨 프로젝트 카드 렌더링
+   ======================================== */
+function renderProjects(repos) {
+  // 빈 저장소 처리
+  if (repos.length === 0) {
+    projectsGrid.innerHTML = `
+      <div class="projects-message">
+        <div class="icon">📭</div>
+        <h3>아직 공개된 저장소가 없어요</h3>
+        <p>GitHub에 프로젝트를 올려보세요!</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // 카드 HTML 생성
+  const cardsHTML = repos.map(repo => {
+    const language = repo.language || 'Unknown';
+    const color = languageColors[language] || '#8b8b8b';
+    const description = repo.description || '설명이 아직 없어요 ✍️';
+    const updatedDate = formatDate(repo.updated_at);
+    
+    return `
+      <article class="project-card" onclick="window.open('${repo.html_url}', '_blank')">
+        <div class="project-header">
+          <div>
+            <div class="project-icon">📦</div>
+            <h3 class="project-title">${repo.name}</h3>
+          </div>
+        </div>
+        
+        <p class="project-desc">${description}</p>
+        
+        <div class="project-meta">
+          <span>
+            <span class="language-dot" style="background: ${color}"></span>
+            ${language}
+          </span>
+          <span>⭐ ${repo.stargazers_count}</span>
+          <span>🍴 ${repo.forks_count}</span>
+        </div>
+        
+        <a href="${repo.html_url}" target="_blank" rel="noopener" class="project-link" onclick="event.stopPropagation()">
+          GitHub에서 보기 →
+        </a>
+      </article>
+    `;
+  }).join('');
+  
+  projectsGrid.innerHTML = cardsHTML;
+}
+
+/* ========================================
+   ⚠️ 에러 화면 렌더링
+   ======================================== */
+function renderError(message) {
+  projectsGrid.innerHTML = `
+    <div class="projects-message">
+      <div class="icon">😢</div>
+      <h3>프로젝트를 불러오지 못했어요</h3>
+      <p>${message}</p>
+      <button class="retry-btn" onclick="fetchGitHubRepos()">
+        🔄 다시 시도
+      </button>
+    </div>
+  `;
+}
+
+/* ========================================
+   📅 날짜 포맷 (상대 시간)
+   예: "3일 전", "2개월 전"
+   ======================================== */
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return '오늘';
+  if (diffDays === 1) return '어제';
+  if (diffDays < 7) return `${diffDays}일 전`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)}주 전`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)}개월 전`;
+  return `${Math.floor(diffDays / 365)}년 전`;
+}
+
+/* ========================================
+   🚀 페이지 로드 시 실행
+   ======================================== */
+fetchGitHubRepos();
+
+
+/* ========================================
+   🍔 햄버거 메뉴 토글
+   ======================================== */
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+const navLinks = document.querySelectorAll('.nav-link');
+
+// 🎯 햄버거 버튼 클릭 → 메뉴 열기/닫기
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');   // 🍔 → ✖
+  navMenu.classList.toggle('active');     // 메뉴 슬라이드 인/아웃
+  document.body.classList.toggle('menu-open'); // 배경 스크롤 잠금
+});
+
+// 🎯 메뉴 링크 클릭 시 → 메뉴 자동 닫기 (UX 개선!)
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+    document.body.classList.remove('menu-open');
+  });
+});
+
+// 🎯 화면 크기 커지면 (768px 초과) → 자동으로 메뉴 닫기
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+    document.body.classList.remove('menu-open');
+  }
+});

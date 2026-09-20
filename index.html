@@ -15,18 +15,32 @@
 </head>
 <body>
 
-  <!-- 🧭 Header -->
-  <header class="header">
-    <nav class="nav">
-      <a href="#" class="logo">Portfolio<span>.</span></a>
-      <ul class="nav-menu">
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
-    </nav>
-  </header>
+<!-- 🧭 Header -->
+<header class="header">
+  <nav class="nav">
+    <a href="#" class="logo">Portfolio<span>.</span></a>
+    
+    <!-- 🍔 햄버거 버튼 (모바일용) -->
+    <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li>
+        <button id="themeToggle" class="theme-toggle" aria-label="테마 변경">
+          🌙
+        </button>
+      </li>  <!-- ✅ 추가! -->
+    </ul>    <!-- ✅ 추가! -->
+  </nav>
+</header>
 
   <!-- 🎯 Hero -->
   <section class="hero">
@@ -92,48 +106,27 @@
     </div>
   </section>
 
-  <!-- 💼 Projects -->
-  <section class="projects" id="projects">
-    <div class="container">
+ <!-- 💼 Projects -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-header">
       <p class="section-label">— Selected Work</p>
-      <h2 class="section-title">
-        최근 프로젝트
-      </h2>
-      <div class="projects-grid">
-        <article class="project-card">
-          <div class="project-num">01 / Web</div>
-          <h3>E-Commerce Platform</h3>
-          <p>모던한 온라인 쇼핑몰 UI/UX 리디자인 프로젝트입니다.</p>
-          <div class="project-tags">
-            <span class="tag">React</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">Tailwind</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-num">02 / App</div>
-          <h3>Task Manager</h3>
-          <p>드래그 앤 드롭으로 관리하는 생산성 앱입니다.</p>
-          <div class="project-tags">
-            <span class="tag">Vue</span>
-            <span class="tag">Firebase</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-num">03 / Web</div>
-          <h3>Portfolio Site</h3>
-          <p>지금 보고 계신 이 포트폴리오 사이트입니다.</p>
-          <div class="project-tags">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">JavaScript</span>
-          </div>
-        </article>
-      </div>
+      <h2>최근 프로젝트</h2>
+      <p class="section-sub">GitHub에서 가져온 실제 저장소들이에요 🚀</p>
     </div>
-  </section>
+
+    <!-- 🎯 동적 렌더링될 컨테이너 -->
+    <div class="projects-grid" id="projectsGrid">
+      <!-- ⏳ 로딩 스켈레톤 (초기 상태) -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </div>
+</section>
 
   <!-- 📧 Contact -->
 <section class="contact" id="contact">
