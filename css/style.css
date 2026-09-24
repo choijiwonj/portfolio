@@ -10,6 +10,7 @@
   --border: #e5e5e5;
   --accent: #00d9a3;      /* 민트 포인트 */
   --accent-hover: #00b88a;
+  --hamburger-line-color: #111;  /* 라이트모드: 검정 */
   
   /* 폰트 */
   --font-sans: 'Inter', -apple-system, sans-serif;
@@ -31,6 +32,7 @@
   --border: #262626;
   --accent: #00ff9d;
   --accent-hover: #00d9a3;
+  --hamburger-line-color: #fff;  /* 다크모드: 흰색 */
 }
 
 /* ========================================
@@ -517,9 +519,6 @@ section {
     padding: 1rem;
   }
 
-  .nav-menu {
-    display: none;  /* 나중에 햄버거로 대체 */
-  }
 
   .hero {
     padding: 7rem 1.5rem 3rem;
@@ -997,7 +996,7 @@ body.modal-open {
   display: block;
   width: 100%;
   height: 3px;
-  background-color: var(--text-color);
+  background-color: var(--hamburger-line-color);
   border-radius: 3px;
   transition: all 0.3s ease;   /* ✨ 부드러운 변형 */
 }
@@ -1034,7 +1033,7 @@ body.modal-open {
     width: 70%;
     max-width: 300px;
     height: 100vh;
-    background: var(--bg-color);
+    background:#00b88a;
     flex-direction: column;    /* 세로 정렬 */
     justify-content: center;
     align-items: center;
@@ -1046,7 +1045,8 @@ body.modal-open {
   
   /* 🚪 active 상태: 메뉴 나타나기 */
   .nav-menu.active {
-    right: 0;                  /* 화면 안으로! */
+      display: flex;               /* 화면 안으로! */
+      right: 0;
   }
   
   /* 메뉴 링크 크게 */
@@ -1102,4 +1102,95 @@ body.modal-open {
    ======================================== */
 body.menu-open {
   overflow: hidden;
+}
+/* 🌑 배경 오버레이 */
+.profile-modal-overlay {
+  display: none;                        /* 기본: 숨김 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);      /* 반투명 검정 배경 */
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 모달 열릴 때 */
+.profile-modal-overlay.active {
+  display: flex;
+}
+
+/* 📦 모달 박스 */
+.profile-modal {
+  background: #00b88a;
+  border-radius: 10px;
+  padding: 2.5rem;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalPop 0.3s ease;        /* 팝업 애니메이션 */
+}
+
+/* ✨ 팝업 애니메이션 */
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ✕ 닫기 버튼 */
+.profile-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+/* 🖼️ 프로필 이미지 */
+.profile-modal-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 30%;                   /* 동그랗게! */
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  margin: 0 auto 1rem auto;
+  display: block;
+}
+
+/* 이름 */
+.profile-modal-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 직업 배지 */
+.profile-modal-job {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* 자기소개 */
+.profile-modal-bio {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-color);
+  opacity: 0.8;
 }

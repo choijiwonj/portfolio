@@ -426,3 +426,26 @@ window.addEventListener('resize', () => {
     document.body.classList.remove('menu-open');
   }
 });
+
+// 요소 가져오기
+const myLink = document.querySelector('[aria-label="mY"]');
+const profileModal = document.getElementById('profileModal');
+const profileModalClose = document.getElementById('profileModalClose');
+
+// 🐙 mY 클릭 → 모달 열기
+myLink.addEventListener('click', (e) => {
+  e.preventDefault();                   // 링크 이동 막기
+  profileModal.classList.add('active');
+});
+
+// ✕ 닫기 버튼 클릭
+profileModalClose.addEventListener('click', () => {
+  profileModal.classList.remove('active');
+});
+
+// 🌑 배경 클릭해도 닫기
+profileModal.addEventListener('click', (e) => {
+  if (e.target === profileModal) {      // 모달 박스 바깥 클릭 시
+    profileModal.classList.remove('active');
+  }
+});
