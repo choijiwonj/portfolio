@@ -9,10 +9,7 @@
 ## 배포 링크
 
 🔗 **Live Demo**  
-https://여기에-깃허브페이지-주소-넣기
-
-예시:
-https://username.github.io/portfolio/
+https://choijiwonj.github.io/portfolio/
 
 ---
 
