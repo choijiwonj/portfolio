@@ -326,7 +326,7 @@ function renderProjects(repos) {
     const updatedDate = formatDate(repo.updated_at);
     
     return `
-      <article class="project-card" onclick="window.open('${repo.html_url}', '_blank')">
+      <article class="project-card" data-url="${repo.html_url}">
         <div class="project-header">
           <div>
             <div class="project-icon">📦</div>
@@ -345,7 +345,7 @@ function renderProjects(repos) {
           <span>🍴 ${repo.forks_count}</span>
         </div>
         
-        <a href="${repo.html_url}" target="_blank" rel="noopener" class="project-link" onclick="event.stopPropagation()">
+        <a href="${repo.html_url}" target="_blank" rel="noopener" class="project-link">
           GitHub에서 보기 →
         </a>
       </article>
@@ -354,6 +354,26 @@ function renderProjects(repos) {
   
   projectsGrid.innerHTML = cardsHTML;
 }
+/* ========================================
+   🖱️ 프로젝트 카드 이벤트 위임
+   ======================================== */
+projectsGrid.addEventListener('click', (e) => {
+  
+  // 🔗 a 태그 클릭이면 그냥 링크 이동
+  if (e.target.closest('.project-link')) return;
+  
+  // 📦 카드 클릭이면 새 탭으로 열기
+  const card = e.target.closest('.project-card');
+  if (card) {
+    const url = card.dataset.url;
+    window.open(url, '_blank');
+  }
+  
+  // 🔄 retry 버튼 클릭
+  if (e.target.closest('#retryBtn')) {
+    fetchGitHubRepos();
+  }
+});
 
 /* ========================================
    ⚠️ 에러 화면 렌더링
@@ -364,7 +384,7 @@ function renderError(message) {
       <div class="icon">😢</div>
       <h3>프로젝트를 불러오지 못했어요</h3>
       <p>${message}</p>
-      <button class="retry-btn" onclick="fetchGitHubRepos()">
+      <button class="retry-btn" id="retryBtn">
         🔄 다시 시도
       </button>
     </div>

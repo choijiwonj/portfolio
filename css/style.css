@@ -1033,7 +1033,8 @@ body.modal-open {
     width: 70%;
     max-width: 300px;
     height: 100vh;
-    background:#00b88a;
+    background: var(--surface);    /* ⬅️ 라이트: #ffffff / 다크: #141414 */
+    color: var(--text);   
     flex-direction: column;    /* 세로 정렬 */
     justify-content: center;
     align-items: center;
@@ -1124,7 +1125,8 @@ body.menu-open {
 
 /* 📦 모달 박스 */
 .profile-modal {
-  background: #00b88a;
+  background: var(--surface);    /* ⬅️ 라이트: #ffffff / 다크: #141414 */
+  color: var(--text);            /* ⬅️ 라이트: #0a0a0a / 다크: #fafafa */
   border-radius: 10px;
   padding: 2.5rem;
   max-width: 380px;
@@ -1132,7 +1134,7 @@ body.menu-open {
   text-align: center;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: modalPop 0.3s ease;        /* 팝업 애니메이션 */
+  animation: modalPop 0.3s ease;
 }
 
 /* ✨ 팝업 애니메이션 */
